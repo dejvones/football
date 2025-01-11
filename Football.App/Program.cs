@@ -11,8 +11,7 @@ var connectionString = string.Empty;
 connectionString = builder.Configuration.GetConnectionString("MongoDb") ?? throw new ArgumentNullException("MongoDb connection string is missing");
 builder.Services.AddSingleton(sp => new MongoDbContext(connectionString, "test"));
 #else
-connectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING") 
-                           ?? throw new ArgumentNullException("MongoDb connection string is miss
+connectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING") ?? throw new ArgumentNullException("MongoDb connection string is missng");
 builder.Services.AddSingleton(sp => new MongoDbContext(connectionString, "database"));
 #endif
 
