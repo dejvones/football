@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Football.App.Models.PlayerViewModel>
+
+@{
+    ViewData["Title"] = "Players";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>All registred players</h1>
+    <a href="@Url.Action("AddPlayer", "Player")" class="btn btn-primary">New Player</a>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Registred from</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>@player.Name</td>
+                <td>@player.Registred.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
