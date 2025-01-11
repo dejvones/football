@@ -9,12 +9,17 @@ public class Match
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
-    public required string Team1Player1Stat { get; set; }
-    public required string Team1Player2Stat { get; set; }
-    public required string Team2Player1Stat { get; set; }
-    public required string Team2Player2Stat { get; set; }
-    public required string League { get; set; }
-    public int Team1Result { get; set; }
-    public int Team2Result { get; set; }
     public DateTime Date { get; set; }
+    public required string LeagueId { get; set; }
+    public required Team Team1 { get; set; }
+    public required Team Team2 { get; set; }
+}
+
+public class Team
+{
+    public required string Player1Id { get; set; }
+    public required string Player1Name { get; set; }
+    public string? Player2Id { get; set; }
+    public string? Player2Name { get; set; }
+    public int Score { get; set; }
 }

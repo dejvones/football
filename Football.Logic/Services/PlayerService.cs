@@ -14,6 +14,24 @@ public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
 
     public async Task CreateAsync(string name)
     {
-        await _playerRepository.AddPlayerAsync(new PlayerModel(string.Empty, name, DateTime.Now));
+        await _playerRepository.AddPlayerAsync(new PlayerModel(string.Empty, name, DateTime.Now, new Stats(100,100,0,0)));
+    }
+
+    public async Task<bool> PlayerExists(string name)
+    {
+        var player = await _playerRepository.GetByNameAsync(name);
+        return player is not null;
+    }
+
+    public async Task<IEnumerable<PlayerModel>> GetCurrentRanking()
+    {
+        var players = await _playerRepository.GetAllAsync();
+        return players.OrderByDescending(x => x.Stats.CurrentPoints).ThenBy(x => x.Stats.CurrentMatches);
+    }
+
+    public async Task<IEnumerable<PlayerModel>> GettAllTimeRanking()
+    {
+        var players = await _playerRepository.GetAllAsync();
+        return players.OrderByDescending(x => x.Stats.AllPoints).ThenBy(x => x.Stats.AllMatches);
     }
 }

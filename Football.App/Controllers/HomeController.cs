@@ -1,15 +1,23 @@
-using Football.Data.Repository;
+using Football.App.Convertors;
+using Football.App.ViewModels;
+using Football.Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Football.App.Controllers;
 
-public class HomeController(ILeagueRepository leagueRepository) : Controller
+public class HomeController(IPlayerService playerService, IMatchService matchService) : Controller
 {
-    private readonly ILeagueRepository _leagueRepository = leagueRepository;
+    private readonly IPlayerService _playerService = playerService;
+    private readonly IMatchService _matchService = matchService;
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var leagues = _leagueRepository.GetAllAsync().Result;
-        return View(leagues);
+        var ranking = await _playerService.GetCurrentRanking();
+        var matches = await _matchService.GetLastMatches();
+        var vm = new HomeViewModel { 
+            Ranking = ranking.Select(PlayerConvertor.ConvertPlayerToViewModel).ToList(), 
+            LatestMatches = matches.Select(MatchConvertor.ConvertMatchToViewModel).ToList() };
+
+        return View(vm);
     }
 }

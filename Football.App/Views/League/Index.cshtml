@@ -1,5 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Football.App.ViewModels.PlayerViewModel>
+
 @{
+    ViewData["Title"] = "Ranking";
 }
+<div>
+    <h1>Ranking</h1>
+    <partial>
+        <partial name="../Components/RankingView" model="Model" />
+    </partial>
+</div>

@@ -18,19 +18,42 @@ public class PlayerRepository : IPlayerRepository
     public async Task<IEnumerable<PlayerModel>> GetAllAsync()
     {
         var players = await _collection.Find(FilterDefinition<Player>.Empty).ToListAsync();
-        return players.Select(x => new PlayerModel(x.Id!, x.Name, x.Registred));
+        return players.Select(x => new PlayerModel(x.Id!, x.Name, x.Registred, new Stats(x.AllPoints, x.CurrentPoints, x.AllMatches, x.CurrentMatches)));
     }
 
-    public async Task<PlayerModel?> GetByIdAsync(string id)
+    public async Task<PlayerModel> GetByIdAsync(string id)
     {
         var filter = Builders<Player>.Filter.Eq(x => x.Id, id);
         var entity = await _collection.Find(filter).FirstOrDefaultAsync();
-        return entity == null ? null : new PlayerModel(entity.Id!, entity.Name, entity.Registred);
+        return entity == null
+            ? throw new Exception("Player not found")
+            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, entity.CurrentMatches));
+    }
+
+    public async Task<PlayerModel?> GetByNameAsync(string name)
+    {
+        var filter = Builders<Player>.Filter.Eq(x => x.Name, name);
+        var entity = await _collection.Find(filter).FirstOrDefaultAsync();
+        return entity == null
+            ? null
+            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, entity.CurrentMatches));
     }
 
     public async Task AddPlayerAsync(PlayerModel model)
     {
-        var player = new Player { Name = model.Name, Registred = model.Registred, PlayerStats = [] };
+        var player = new Player { Name = model.Name, Registred = model.Registred, AllPoints = model.Stats.AllPoints, CurrentPoints = model.Stats.CurrentPoints, AllMatches = model.Stats.AllMatches, CurrentMatches = model.Stats.CurrentMatches };
         await _collection.InsertOneAsync(player);
+    }
+
+    public async Task UpdatePlayerAsync(PlayerModel model)
+    {
+        var filter = Builders<Player>.Filter.Eq(x => x.Id, model.Id);
+        var update = Builders<Player>.Update
+            .Set(x => x.Name, model.Name)
+            .Set(x => x.AllPoints, model.Stats.AllPoints)
+            .Set(x => x.CurrentPoints, model.Stats.CurrentPoints)
+            .Set(x => x.AllMatches, model.Stats.AllMatches)
+            .Set(x => x.CurrentMatches, model.Stats.CurrentMatches);
+        await _collection.UpdateOneAsync(filter, update);
     }
 }

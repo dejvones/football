@@ -15,11 +15,13 @@ public class LeagueRepository : ILeagueRepository
         _collection = context.GetCollection<League>("leagues");
     }
 
-    public async Task<LeagueModel?> GetActiveAsync()
+    public async Task<LeagueModel> GetActiveAsync()
     {
         var filter = Builders<League>.Filter.Eq(x => x.Active, true);
         var entity = await _collection.Find(filter).FirstOrDefaultAsync();
-        return entity == null ? null : new LeagueModel(entity.Id!, entity.Name, entity.StartDate, entity.EndDate);
+        return entity == null
+            ? throw new Exception("No active league found")
+            : new LeagueModel(entity.Id!, entity.Name, entity.StartDate, entity.EndDate);
     }
 
     public async Task<IEnumerable<LeagueModel>> GetAllAsync()
@@ -28,14 +30,15 @@ public class LeagueRepository : ILeagueRepository
         return leagues.Select(x => new LeagueModel(x.Id!, x.Name, x.StartDate, x.EndDate));
     }
 
-    public async Task AddLeagueAsync()
+    public async Task AddLeagueAsync(LeagueModel model)
     {
-        var league = new League
+        var entity = new League
         {
-            Name = "Premier League",
-            StartDate = DateTime.UtcNow,
-            EndDate = DateTime.UtcNow.AddYears(1)
+            Name = model.Name,
+            StartDate = model.Start,
+            EndDate = model.End,
+            Active = true
         };
-        await _collection.InsertOneAsync(league);
+        await _collection.InsertOneAsync(entity);
     }
 }

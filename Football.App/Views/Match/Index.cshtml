@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Football.App.Models.MatchViewModel>
+﻿@model IEnumerable<Football.App.ViewModels.MatchViewModel>
 
 @{
-    ViewData["Title"] = "Players";
+    ViewData["Title"] = "Matches";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -9,26 +9,6 @@
     <a href="@Url.Action("AddMatch", "Match")" class="btn btn-primary">New Match</a>
 </div>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Team1</th>
-            <th>Score</th>
-            <th>Team2</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var match in Model)
-        {
-            <tr>
-                <td>@match.Player1!.Name + @match.Player2!.Name</td>
-                <td>@match.Score1 : @match.Score2</td>
-                <td>@match.Player3!.Name + @match.Player4!.Name</td>
-                <td>@match.Date.ToShortDateString()</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
+<partial>
+    <partial name="../Components/MatchView" model="Model" />
+</partial>

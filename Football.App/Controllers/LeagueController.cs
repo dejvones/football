@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Football.App.Convertors;
+using Football.Logic.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Football.App.Controllers
+namespace Football.App.Controllers;
+
+public class LeagueController(IPlayerService playerService) : Controller
 {
-    public class LeagueController : Controller
+    private readonly IPlayerService _playerService = playerService;
+
+    public async Task<IActionResult> Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        var ranking = await _playerService.GetCurrentRanking();
+        var vm = ranking.Select(PlayerConvertor.ConvertPlayerToViewModel).ToList();
+        return View(vm);
     }
 }

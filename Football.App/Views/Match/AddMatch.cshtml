@@ -1,4 +1,4 @@
-﻿@model Football.App.Models.MatchViewModel
+﻿@model Football.App.ViewModels.MatchViewModel
 
 @{
     ViewData["Title"] = "Add Match";
@@ -6,36 +6,58 @@
 
 <h1>Add Match</h1>
 
+<style>
+    /* Skrytí šipek pro vstupní pole typu číslo */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
 <form asp-action="AddMatch" method="post">
-    <div class="form-group">
-        <label asp-for="Player1Id" class="control-label">Player 1 (Team 1)</label>
-        <select asp-for="Player1Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
+    <div class="d-flex align-items-center">
+        <div class="col-md-5 card p-2 m-2">
+            <h3>Team 1</h3>
+            <div class="form-group">
+                <label asp-for="Team1Player1Id" class="control-label">Player 1</label>
+                <select asp-for="Team1Player1Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team1Player2Id" class="control-label">Player 2</label>
+                <select asp-for="Team1Player2Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
+            </div>
+        </div>
+        <div class="col-md-2 card p-2 m-2">
+            <h4>Score</h4>
+            <div class="d-flex flex-row align-items-center mb-2">
+                <input asp-for="Score1" class="form-control w-50 text-end" />
+                <h4 class="m-2">:</h4>
+                <input asp-for="Score2" class="form-control w-50" />
+            </div>
+            <h4>Date</h4>
+            <div class="form-group">
+                <input asp-for="Date" class="form-control" type="date" />
+            </div>
+        </div>
+        
+        <div class="col-md-5 card p-2 m-2">
+            <h3>Team 2</h3>
+            <div class="form-group">
+                <label asp-for="Team2Player1Id" class="control-label">Player 1</label>
+                <select asp-for="Team2Player1Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team2Player2Id" class="control-label">Player 2</label>
+                <select asp-for="Team2Player2Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Player2Id" class="control-label">Player 2 (Team 1)</label>
-        <select asp-for="Player2Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="Player3Id" class="control-label">Player 1 (Team 2)</label>
-        <select asp-for="Player3Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="Player4Id" class="control-label">Player 2 (Team 2)</label>
-        <select asp-for="Player4Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="Score1" class="control-label">Score (Team 1)</label>
-        <input asp-for="Score1" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Score2" class="control-label">Score (Team 2)</label>
-        <input asp-for="Score2" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Date" class="control-label">Date</label>
-        <input asp-for="Date" class="form-control" />
-    </div>
-    <div class="form-group">
+    <div class="form-group text-end">
         <input type="submit" value="Add Match" class="btn btn-primary" />
     </div>
 </form>

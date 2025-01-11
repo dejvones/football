@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Football.App.ViewModels.PlayerViewModel>
+
+@if (Model != null && Model.Any()){
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 45%;">Name</th>
+                <th style="width: 25%;">Points</th>
+                <th style="width: 25%;">Matches</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var player = Model.ElementAt(i);
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@player.Name</td>
+                    <td>@player.CurrentPoints</td>
+                    <td>@player.CurrentMatches</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else{
+    <p>No players available.</p>
+}
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>

@@ -4,7 +4,7 @@ namespace Football.Data.Repository;
 
 public interface ILeagueRepository
 {
-    Task<LeagueModel?> GetActiveAsync();
+    Task<LeagueModel> GetActiveAsync();
     Task<IEnumerable<LeagueModel>> GetAllAsync();
-    Task AddLeagueAsync();
+    Task AddLeagueAsync(LeagueModel model);
 }

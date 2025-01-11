@@ -1,4 +1,4 @@
 ﻿namespace Football.Data.Models;
 
-public record MatchModel(string Id, MatchTeam Team1, MatchTeam Team2, DateTime Date);
-public record MatchTeam(PlayerModel Player1, PlayerModel Player2, int Score);
+public record MatchModel(string Id, string LeagueId, MatchTeam Team1, MatchTeam Team2, DateTime Date);
+public record MatchTeam(string Player1Id, string Player1Name, string? Player2Id, string? Player2Name, int Score);

@@ -13,6 +13,5 @@ public class League
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool Active { get; set; }
-    public List<string>? Matches { get; set; }
-    public List<string>? PlayerStats { get; set; }
+    public List<string> MatchIds { get; set; } = new();
 }

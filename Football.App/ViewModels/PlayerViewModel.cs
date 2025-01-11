@@ -1,14 +1,8 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿namespace Football.App.ViewModels;
 
-namespace Football.Data.Entity;
-
-public class Player
+public class PlayerViewModel
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
-
     public required string Name { get; set; }
     public DateTime Registred { get; set; }
     public int AllPoints { get; set; }
