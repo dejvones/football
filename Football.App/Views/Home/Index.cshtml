@@ -4,14 +4,14 @@
     ViewData["Title"] = "Overview";
 }
 
-<div class="d-flex">
-    <div class="col-md-6 p-2 m-2 border-top">
+<div class="d-flex flex-lg-row flex-column">
+    <div class="col-lg-6 col-12 p-2 m-2 border-top">
         <h2>Current league ranking</h2>
         <partial>
             <partial name="../Components/RankingView" model="Model.Ranking" />
         </partial>
     </div>
-    <div class="col-md-6 p-2 m-2 border-top">
+    <div class="col-lg-6 col-12 p-2 m-2 border-top">
         <h2>Last matches</h2>
         <partial>
             <partial name="../Components/MatchView" model="Model.LatestMatches" />

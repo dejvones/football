@@ -2,6 +2,6 @@
 
 public class HomeViewModel
 {
-    public List<PlayerViewModel> Ranking { get; set; } = [];
+    public RankingViewModel Ranking { get; set; } = new();
     public List<MatchViewModel> LatestMatches { get; set; } = [];
 }

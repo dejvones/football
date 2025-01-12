@@ -20,8 +20,8 @@
 </style>
 
 <form asp-action="AddMatch" method="post">
-    <div class="d-flex align-items-center">
-        <div class="col-md-5 card p-2 m-2">
+    <div class="d-flex flex-column flex-md-row align-items-center">
+        <div class="col-md-5 col-12 card p-2 m-2">
             <h3>Team 1</h3>
             <div class="form-group">
                 <label asp-for="Team1Player1Id" class="control-label">Player 1</label>
@@ -32,7 +32,7 @@
                 <select asp-for="Team1Player2Id" class="form-control" asp-items="@(new SelectList(Model.AllPlayers, "Id", "Name"))"></select>
             </div>
         </div>
-        <div class="col-md-2 card p-2 m-2">
+        <div class="col-md-2 col-12 card p-2 m-2">
             <h4>Score</h4>
             <div class="d-flex flex-row align-items-center mb-2">
                 <input asp-for="Score1" class="form-control w-50 text-end" />
@@ -45,7 +45,7 @@
             </div>
         </div>
         
-        <div class="col-md-5 card p-2 m-2">
+        <div class="col-md-5 col-12 card p-2 m-2">
             <h3>Team 2</h3>
             <div class="form-group">
                 <label asp-for="Team2Player1Id" class="control-label">Player 1</label>
