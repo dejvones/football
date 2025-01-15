@@ -14,7 +14,7 @@ public class MatchController(IMatchService matchService, IPlayerService playerSe
     public async Task<IActionResult> Index()
     {
         var matches = await _matchService.GetAllMatches();
-        var vm = matches.Select(MatchConvertor.ConvertMatchToViewModel);
+        var vm = matches.Select(MatchConvertor.ConvertMatchToViewModel).GroupBy(x => x.Date);
         return View(vm);
     }
 

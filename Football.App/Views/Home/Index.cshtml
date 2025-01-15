@@ -6,15 +6,25 @@
 
 <div class="d-flex flex-lg-row flex-column">
     <div class="col-lg-6 col-12 p-2 m-2 border-top">
-        <h2>Current league ranking</h2>
+        <h2>Top 10</h2>
         <partial>
             <partial name="../Components/RankingView" model="Model.Ranking" />
         </partial>
+        @if(Model.ShowAllRanking){
+            <div class="text-center mt-2">
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="League" asp-action="Index">Show full ranking</a>
+            </div>
+        }
     </div>
     <div class="col-lg-6 col-12 p-2 m-2 border-top">
-        <h2>Last matches</h2>
+        <h2>Last 5 matches</h2>
         <partial>
             <partial name="../Components/MatchView" model="Model.LatestMatches" />
         </partial>
+        @if(Model.ShowAllMatches){
+            <div class="text-center mt-2">
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Match" asp-action="Index">Show all matches</a>
+            </div>
+        }
     </div>
 </div>

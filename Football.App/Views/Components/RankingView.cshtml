@@ -5,21 +5,52 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th style="width: 5%;">#</th>
-                <th style="width: 45%;">Name</th>
-                <th style="width: 25%;">Points</th>
-                <th style="width: 25%;">Matches</th>
+                <th class="text-center" style="width: 10%;">#</th>
+                <th style="width: 40%;">Name</th>
+                <th class="text-center" style="width: 15%;">Matches</th>
+                <th class="text-center" style="width: 20%;">
+                    Points
+                    <span class="info-icon" data-bs-toggle="tooltip" title="Initial value is 100. Gain 100 pts for a win, lose 50 pts for a loss."><i class="fas fa-info-circle"></i></span>
+                </th>
+                <th class="text-center" style="width: 15%;">
+                    Pts\M
+                    <span class="info-icon" data-bs-toggle="tooltip" title="Points per match."><i class="fas fa-info-circle"></i></span>
+                </th>
             </tr>
         </thead>
         <tbody>
             @for (int i = 0; i < Model.Ranking.Count(); i++)
             {
                 var player = Model.Ranking.ElementAt(i);
-                <tr>
-                    <td>@(i + 1)</td>
+                <tr class="@(i == 0 ? "gold" : i == 1 ? "silver" : i == 2 ? "bronze" : "")">
+                            <td class="text-center">
+                        @if (i == 0)
+                        {
+                                        <i class="fas fa-medal gold"></i>
+                        }
+                        else if (i == 1)
+                        {
+                                        <i class="fas fa-medal silver"></i>
+                        }
+                        else if (i == 2)
+                        {
+                                        <i class="fas fa-medal bronze"></i>
+                        }
+                        else
+                        {
+                            @(i + 1)
+                        }
+                            </td>
                     <td>@player.Name</td>
-                    <td>@player.CurrentPoints</td>
-                    <td>@player.CurrentMatches</td>
+                    <td class="text-center">@player.CurrentMatches</td>
+                    <td class="text-center">@player.CurrentPoints</td>
+                    <td class="text-center">
+                        @{
+                            var pointsPerMatch = player.CurrentMatches > 0 ? (decimal)player.CurrentPoints / player.CurrentMatches : 0;
+                            @pointsPerMatch.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)
+                            ;
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
@@ -33,4 +64,32 @@ else{
     .table-hover tbody tr:hover {
         background-color: #f5f5f5;
     }
+
+    .info-icon {
+        font-size: 1em;
+        cursor: pointer;
+        margin-left: 2px;
+        margin-bottom: 5px
+    }
+
+    .gold {
+        color: gold;
+    }
+
+    .silver {
+        color: silver;
+    }
+
+    .bronze {
+        color: #cd7f32;
+    }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>

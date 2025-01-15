@@ -11,7 +11,7 @@ public class MatchService(IMatchRepository matchRepository, ILeagueRepository le
 
     public async Task<IEnumerable<MatchModel>> GetLastMatches()
     {
-        var matches = await _matchRepository.GetAllAsync(5);
+        var matches = await _matchRepository.GetAllAsync(6);
         return matches.OrderByDescending(x => x.Date);
     }
 

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/Football.App.styles.css" asp-append-version="true" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/0c80c02098.js" crossorigin="anonymous"></script>
     <style>
         #hiddenMenu {
             display: none;
@@ -74,25 +75,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 Football.App
+            &copy; 2025 Football.App 1.0.0
         </div>
     </footer>
-    <div id="hiddenMenu" class="bg-dark text-light">
-        <h5>Admin Menu</h5>
-        <a asp-area="" asp-controller="Admin" asp-action="AddLeague">Add League</a>
-    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        let clickCount = 0;
-        document.getElementById('clickButton').addEventListener('click', function () {
-            clickCount++;
-            if (clickCount >= 5) {
-                document.getElementById('hiddenMenu').style.display = 'block';
-            }
-        });
-    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
