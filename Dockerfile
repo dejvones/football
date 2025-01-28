@@ -19,8 +19,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build-env /app/Football.App/out .
 
-# Load environment variables from .env file
-COPY .env .env
-ENV $(cat .env | grep -v ^# | xargs)
-
 ENTRYPOINT ["dotnet", "Football.App.dll"]
