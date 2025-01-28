@@ -26,12 +26,12 @@ public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
     public async Task<IEnumerable<PlayerModel>> GetCurrentRanking()
     {
         var players = await _playerRepository.GetAllAsync();
-        return players.OrderByDescending(x => x.Stats.CurrentPoints).ThenBy(x => x.Stats.CurrentMatches);
+        return players.OrderByDescending(x => x.Stats.CurrentPoints);
     }
 
     public async Task<IEnumerable<PlayerModel>> GettAllTimeRanking()
     {
         var players = await _playerRepository.GetAllAsync();
-        return players.OrderByDescending(x => x.Stats.AllPoints).ThenBy(x => x.Stats.AllMatches);
+        return players.OrderByDescending(x => x.Stats.AllPoints);
     }
 }

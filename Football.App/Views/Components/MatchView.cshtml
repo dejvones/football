@@ -12,9 +12,12 @@
         @foreach(var match in group){
             <div class="card card-hover mb-3 mt-1">
                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center text-center">
-                    <h5 class="col-sm-5 col-12 p-2 mx-2 @(match.Score1 > match.Score2 ? "text-success fw-bold" : "text-danger")">@match.Team1Player1Name + @match.Team1Player2Name</h5>
-                    <h5 class="m-0">@match.Score1 : @match.Score2</h5>
-                    <h5 class="col-sm-5 col-12 p-2 mx-2 @(match.Score2 > match.Score1 ? "text-success fw-bold" : "text-danger")">@match.Team2Player1Name + @match.Team2Player2Name</h5>
+                    <h5 class="col-sm-5 col-12 p-2 mx-2">@match.Team1Player1Name + @match.Team1Player2Name</h5>
+                    <h5 class="m-0">
+                        <span class="@(match.Score1 > match.Score2 ? "text-success fw-bold" : "text-danger")">@match.Score1</span> :
+                        <span class="@(match.Score2 > match.Score1 ? "text-success fw-bold" : "text-danger")">@match.Score2</span>
+                    </h5>
+                    <h5 class="col-sm-5 col-12 p-2 mx-2">@match.Team2Player1Name + @match.Team2Player2Name</h5>
                 </div>
             </div>
         }

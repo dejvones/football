@@ -15,7 +15,10 @@ public static class PlayerConvertor
             CurrentPoints = player.Stats.CurrentPoints,
             CurrentMatches = player.Stats.CurrentMatches,
             AllPoints = player.Stats.AllPoints,
-            AllMatches = player.Stats.AllMatches
+            AllMatches = player.Stats.AllMatches,
+            CurrentPointsPerMatch = player.Stats.CurrentMatches > 0
+            ? ((double)player.Stats.CurrentPoints - 100) / player.Stats.CurrentMatches
+            : 0
         };
     }
 }

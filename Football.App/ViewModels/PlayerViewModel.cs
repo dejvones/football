@@ -9,4 +9,5 @@ public class PlayerViewModel
     public int CurrentPoints { get; set; }
     public int AllMatches { get; set; }
     public int CurrentMatches { get; set; }
+    public double CurrentPointsPerMatch { get; set; }
 }

@@ -15,7 +15,7 @@ public class LeagueController(IPlayerService playerService, ILeagueRepository le
     {
         var ranking = await _playerService.GetCurrentRanking();
         var leagues = await _leagueRepository.GetActiveAsync();
-        var rankingVm = ranking.Select(PlayerConvertor.ConvertPlayerToViewModel).ToList();
+        var rankingVm = ranking.Select(PlayerConvertor.ConvertPlayerToViewModel).OrderByDescending(x => x.CurrentPoints).ThenByDescending(x => x.CurrentPointsPerMatch).ToList();
         var vm = new RankingViewModel { LeagueEnd = leagues.End, LeagueName = leagues.Name, LeagueStart = leagues.Start, Ranking = rankingVm };
         return View(vm);
     }
