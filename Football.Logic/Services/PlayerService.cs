@@ -14,7 +14,8 @@ public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
 
     public async Task CreateAsync(string name)
     {
-        await _playerRepository.AddPlayerAsync(new PlayerModel(string.Empty, name, DateTime.Now, new Stats(100,100,0,0)));
+        var stats = new Stats(100, 100, 0, 0, 0, [0, 0, 0, 0, 0]);
+        await _playerRepository.AddPlayerAsync(new PlayerModel(string.Empty, name, DateTime.Now, stats));
     }
 
     public async Task<bool> PlayerExists(string name)

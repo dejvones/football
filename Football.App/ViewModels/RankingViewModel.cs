@@ -6,4 +6,5 @@ public class RankingViewModel
     public string LeagueName { get; set; } = "";
     public DateTime LeagueStart { get; set; }
     public DateTime LeagueEnd { get; set; }
+    public TableType Type { get; set; }
 }

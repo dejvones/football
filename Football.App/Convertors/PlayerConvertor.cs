@@ -7,6 +7,9 @@ public static class PlayerConvertor
 {
     public static PlayerViewModel ConvertPlayerToViewModel(PlayerModel player)
     {
+        var form = player.Stats.Form.ToList();
+        form.Insert(0, Result.Future);
+
         return new PlayerViewModel
         {
             Id = player.Id,
@@ -18,7 +21,9 @@ public static class PlayerConvertor
             AllMatches = player.Stats.AllMatches,
             CurrentPointsPerMatch = player.Stats.CurrentMatches > 0
             ? ((double)player.Stats.CurrentPoints - 100) / player.Stats.CurrentMatches
-            : 0
+            : 0,
+            RateWin = player.Stats.CurrentMatches > 0 ? (double)player.Stats.Wins / player.Stats.CurrentMatches : 0,
+            Form = [.. form]
         };
     }
 }

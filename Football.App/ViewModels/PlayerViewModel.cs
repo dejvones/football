@@ -1,4 +1,6 @@
-﻿namespace Football.App.ViewModels;
+﻿using Football.Data.Models;
+
+namespace Football.App.ViewModels;
 
 public class PlayerViewModel
 {
@@ -10,4 +12,13 @@ public class PlayerViewModel
     public int AllMatches { get; set; }
     public int CurrentMatches { get; set; }
     public double CurrentPointsPerMatch { get; set; }
+    public double RateWin { get; set; }
+    public Result[] Form { get; set; } = [];
+}
+
+public enum TableType
+{
+    Top,
+    All,
+    History
 }

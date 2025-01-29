@@ -18,7 +18,8 @@ public class PlayerRepository : IPlayerRepository
     public async Task<IEnumerable<PlayerModel>> GetAllAsync()
     {
         var players = await _collection.Find(FilterDefinition<Player>.Empty).ToListAsync();
-        return players.Select(x => new PlayerModel(x.Id!, x.Name, x.Registred, new Stats(x.AllPoints, x.CurrentPoints, x.AllMatches, x.CurrentMatches)));
+        return players.Select(x => new PlayerModel(x.Id!, x.Name, x.Registred, new Stats(x.AllPoints, x.CurrentPoints, x.AllMatches,
+            x.CurrentMatches, x.Wins, x.Form.Select(r => (Result)r).ToArray())));
     }
 
     public async Task<PlayerModel> GetByIdAsync(string id)
@@ -27,7 +28,8 @@ public class PlayerRepository : IPlayerRepository
         var entity = await _collection.Find(filter).FirstOrDefaultAsync();
         return entity == null
             ? throw new Exception("Player not found")
-            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, entity.CurrentMatches));
+            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, 
+            entity.CurrentMatches, entity.Wins, entity.Form.Select(r => (Result)r).ToArray()));
     }
 
     public async Task<PlayerModel?> GetByNameAsync(string name)
@@ -36,12 +38,14 @@ public class PlayerRepository : IPlayerRepository
         var entity = await _collection.Find(filter).FirstOrDefaultAsync();
         return entity == null
             ? null
-            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, entity.CurrentMatches));
+            : new PlayerModel(entity.Id!, entity.Name, entity.Registred, new Stats(entity.AllPoints, entity.CurrentPoints, entity.AllMatches, 
+            entity.CurrentMatches, entity.Wins, entity.Form.Select(r => (Result)r).ToArray()));
     }
 
     public async Task AddPlayerAsync(PlayerModel model)
     {
-        var player = new Player { Name = model.Name, Registred = model.Registred, AllPoints = model.Stats.AllPoints, CurrentPoints = model.Stats.CurrentPoints, AllMatches = model.Stats.AllMatches, CurrentMatches = model.Stats.CurrentMatches };
+        var player = new Player { Name = model.Name, Registred = model.Registred, AllPoints = model.Stats.AllPoints, CurrentPoints = model.Stats.CurrentPoints, AllMatches = model.Stats.AllMatches, 
+            CurrentMatches = model.Stats.CurrentMatches, Wins = model.Stats.Wins, Form = model.Stats.Form.Select(r => (int)r).ToArray() };
         await _collection.InsertOneAsync(player);
     }
 
@@ -53,7 +57,9 @@ public class PlayerRepository : IPlayerRepository
             .Set(x => x.AllPoints, model.Stats.AllPoints)
             .Set(x => x.CurrentPoints, model.Stats.CurrentPoints)
             .Set(x => x.AllMatches, model.Stats.AllMatches)
-            .Set(x => x.CurrentMatches, model.Stats.CurrentMatches);
+            .Set(x => x.CurrentMatches, model.Stats.CurrentMatches)
+            .Set(x => x.Wins, model.Stats.Wins)
+            .Set(x => x.Form, model.Stats.Form.Select(x => (int)x).ToArray());
         await _collection.UpdateOneAsync(filter, update);
     }
 }

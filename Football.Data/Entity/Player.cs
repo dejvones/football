@@ -15,4 +15,6 @@ public class Player
     public int CurrentPoints { get; set; }
     public int AllMatches { get; set; }
     public int CurrentMatches { get; set; }
+    public int Wins { get; set; }
+    public int[] Form { get; set; } = [0, 0, 0, 0, 0];
 }

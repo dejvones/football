@@ -19,7 +19,8 @@ public class HomeController(IPlayerService playerService, IMatchService matchSer
         var league = await _leagueRepository.GetActiveAsync();
         var rankingVm = ranking.Select(PlayerConvertor.ConvertPlayerToViewModel).OrderByDescending(x => x.CurrentPoints).ThenByDescending(x => x.CurrentPointsPerMatch).ToList();
         var vm = new HomeViewModel { 
-            Ranking = new RankingViewModel { Ranking = rankingVm.Take(10).ToList(), LeagueName = league.Name, LeagueStart = league.Start, LeagueEnd = league.End}, 
+            Ranking = new RankingViewModel { Ranking = rankingVm.Take(10).ToList(), LeagueName = league.Name, LeagueStart = league.Start, 
+                LeagueEnd = league.End, Type = TableType.Top}, 
             LatestMatches = matches.Select(MatchConvertor.ConvertMatchToViewModel).Take(5).GroupBy(x => x.Date).ToList(),
             ShowAllMatches = matches.Count() > 5, ShowAllRanking = rankingVm.Count > 10};
 
