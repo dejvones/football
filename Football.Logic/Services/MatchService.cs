@@ -58,7 +58,7 @@ public class MatchService(IMatchRepository matchRepository, ILeagueRepository le
         }
 
         var updatedPoints = UpdatePoints(player, points);
-        var updatedWins = UpdateWins(player, isWin);
+        var updatedWins = UpdateWins(updatedPoints, isWin);
 
         await _playerRepository.UpdatePlayerAsync(updatedWins);
     }
@@ -67,7 +67,6 @@ public class MatchService(IMatchRepository matchRepository, ILeagueRepository le
     {
         var newCurrentPoints = Math.Max(player.Stats.CurrentPoints + points, 0);
         var newAllPoints = Math.Max(player.Stats.AllPoints + points, 0);
-        var currentForm = player.Stats.Form.ToList();
         return player with
         {
             Stats = player.Stats with
@@ -89,7 +88,7 @@ public class MatchService(IMatchRepository matchRepository, ILeagueRepository le
         {
             Stats = player.Stats with
             {
-                Form = form.ToArray(),
+                Form = [.. form],
                 Wins = player.Stats.Wins + (isWin ? 1 : 0)
             }
         };

@@ -7,8 +7,7 @@ public static class PlayerConvertor
 {
     public static PlayerViewModel ConvertPlayerToViewModel(PlayerModel player)
     {
-        var form = player.Stats.Form.ToList();
-        form.Insert(0, Result.Future);
+        var form = player.Stats.Form.Reverse();
 
         return new PlayerViewModel
         {

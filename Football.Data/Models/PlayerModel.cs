@@ -7,6 +7,5 @@ public enum Result
 {
     Unknown = 0,
     Win = 1,
-    Lose = 2,
-    Future = 3
+    Lose = 2
 }

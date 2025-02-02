@@ -3,157 +3,154 @@
 @if (Model != null)
 {
     <h5>@Model.LeagueName (@Model.LeagueStart.ToShortDateString() - @Model.LeagueEnd.ToShortDateString())</h5>
-    <table class="table table-hover">
-        @if (Model.Type == Football.App.ViewModels.TableType.Top)
-        {
-            <thead>
-                <tr>
-                    <th class="text-center text-nowrap">#</th>
-                    <th class="text-nowrap">Name</th>
-                    <th class="text-center text-nowrap">
-                        <span>
-                            Matches
-                        </span>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            @if (Model.Type == Football.App.ViewModels.TableType.Top)
+            {
+                <thead>
+                    <tr>
+                        <th class="text-center text-nowrap">#</th>
+                        <th class="text-nowrap">Name</th>
+                        <th class="text-center text-nowrap">
+                            <span>
+                                Matches
+                            </span>
+                            </th>
+                        <th class="text-center text-nowrap" >
+                            <span>
+                                Points
+                            </span>
                         </th>
-                    <th class="text-center text-nowrap" >
-                        <span>
-                            Points
-                        </span>
-                    </th>
-                    <th class="text-center text-nowrap">
-                        <span>
-                            Win rate
-                        </span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Ranking.Count(); i++)
-                {
-                    var player = Model.Ranking.ElementAt(i);
-                    <tr class="@(i == 0 ? "gold" : i == 1 ? "silver" : i == 2 ? "bronze" : "")">
-                        <td class="text-center text-nowrap">
-                            @if (i == 0)
-                            {
-                                <i class="fas fa-medal gold"></i>
-                            }
-                            else if (i == 1)
-                            {
-                                <i class="fas fa-medal silver"></i>
-                            }
-                            else if (i == 2)
-                            {
-                                <i class="fas fa-medal bronze"></i>
-                            }
-                            else
-                            {
-                                @(i + 1)
-                            }
-                        </td>
-                        <td class="text-nowrap">@player.Name</td>
-                        <td class="text-center text-nowrap">@player.CurrentMatches</td>
-                        <td class="text-center text-nowrap">@player.CurrentPoints</td>
-                        <td class="text-center text-nowrap">@player.RateWin.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
+                        <th class="text-center text-nowrap">
+                            <span>
+                                Win rate
+                            </span>
+                        </th>
                     </tr>
-                }
-            </tbody>
-        }
-        else
-        {
-            <thead>
-                <tr>
-                    <th class="text-center text-nowrap">#</th>
-                    <th class="text-nowrap">Name</th>
-                    <th class="text-center text-nowrap">Matches</th>
-                    <th class="text-center text-nowrap">
-                        <span>Points</span>
-                    </th>
-                    <th class="text-center text-nowrap">
-                        <span>
-                            Win rate
-                        </span>
-                    </th>
-                    <th class="text-center text-nowrap">
-                        <span data-bs-toggle="tooltip" title="Points per match">
-                            Pts\M
-                        </span>
-                    </th>
-                    <th class="text-center text-nowrap">
-                        <span data-bs-toggle="tooltip" title="Actual form in last 5 matches.">
-                            Form
-                        </span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Ranking.Count(); i++)
-                {
-                    var player = Model.Ranking.ElementAt(i);
-                    <tr class="@(i == 0 ? "gold" : i == 1 ? "silver" : i == 2 ? "bronze" : "")">
-                        <td class="text-center text-nowrap">
-                            @if (i == 0)
-                            {
-                                <i class="fas fa-medal gold"></i>
-                            }
-                            else if (i == 1)
-                            {
-                                <i class="fas fa-medal silver"></i>
-                            }
-                            else if (i == 2)
-                            {
-                                <i class="fas fa-medal bronze"></i>
-                            }
-                            else
-                            {
-                                @(i + 1)
-                            }
-                        </td>
-                        <td class="text-nowrap">@player.Name</td>
-                        <td class="text-center text-nowrap">@player.CurrentMatches</td>
-                        <td class="text-center text-nowrap">@player.CurrentPoints</td>
-                        <td class="text-center text-nowrap">@player.RateWin.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
-                        <td class="text-center text-nowrap">@player.CurrentPointsPerMatch.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
-                        <td class="text-center text-nowrap">
-                            @foreach (var form in player.Form)
-                            {
-                                string badgeClass;
-                                string badgeText;
-                                string tooltipText;
-
-                                switch (form)
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Ranking.Count(); i++)
+                    {
+                        var player = Model.Ranking.ElementAt(i);
+                        <tr class="@(i == 0 ? "gold" : i == 1 ? "silver" : i == 2 ? "bronze" : "")">
+                            <td class="text-center text-nowrap">
+                                @if (i == 0)
                                 {
-                                    case Football.Data.Models.Result.Win:
-                                        badgeClass = "bg-success";
-                                        badgeText = "W";
-                                        tooltipText = "Win";
-                                        break;
-                                    case Football.Data.Models.Result.Lose:
-                                        badgeClass = "bg-danger";
-                                        badgeText = "L";
-                                        tooltipText = "Lose";
-                                        break;
-                                    case Football.Data.Models.Result.Future:
-                                        badgeClass = "bg-secondary";
-                                        badgeText = "?";
-                                        tooltipText = "Next match";
-                                        break;
-                                    default:
-                                        badgeClass = "bg-warning";
-                                        badgeText = "-";
-                                        tooltipText = "No match";
-                                        break;
+                                    <i class="fas fa-medal gold"></i>
                                 }
-
-                                <span class="badge fixed-width @badgeClass" data-bs-toggle="tooltip" title="@tooltipText">
-                                    @badgeText
-                                </span>
-                            }
-                        </td>
+                                else if (i == 1)
+                                {
+                                    <i class="fas fa-medal silver"></i>
+                                }
+                                else if (i == 2)
+                                {
+                                    <i class="fas fa-medal bronze"></i>
+                                }
+                                else
+                                {
+                                    @(i + 1)
+                                }
+                            </td>
+                            <td class="text-nowrap">@player.Name</td>
+                            <td class="text-center text-nowrap">@player.CurrentMatches</td>
+                            <td class="text-center text-nowrap">@player.CurrentPoints</td>
+                            <td class="text-center text-nowrap">@player.RateWin.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
+                        </tr>
+                    }
+                </tbody>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th class="text-center text-nowrap">#</th>
+                        <th class="text-nowrap">Name</th>
+                        <th class="text-center text-nowrap">Matches</th>
+                        <th class="text-center text-nowrap">
+                            <span>Points</span>
+                        </th>
+                        <th class="text-center text-nowrap">
+                            <span>
+                                Win rate
+                            </span>
+                        </th>
+                        <th class="text-center text-nowrap">
+                            <span data-bs-toggle="tooltip" title="Points per match">
+                                Pts\M
+                            </span>
+                        </th>
+                        <th class="text-center text-nowrap">
+                            <span data-bs-toggle="tooltip" title="Actual form in last 5 matches.">
+                                Form
+                            </span>
+                        </th>
                     </tr>
-                }
-            </tbody>
-        }
-    </table>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Ranking.Count(); i++)
+                    {
+                        var player = Model.Ranking.ElementAt(i);
+                        <tr class="@(i == 0 ? "gold" : i == 1 ? "silver" : i == 2 ? "bronze" : "")">
+                            <td class="text-center text-nowrap">
+                                @if (i == 0)
+                                {
+                                    <i class="fas fa-medal gold"></i>
+                                }
+                                else if (i == 1)
+                                {
+                                    <i class="fas fa-medal silver"></i>
+                                }
+                                else if (i == 2)
+                                {
+                                    <i class="fas fa-medal bronze"></i>
+                                }
+                                else
+                                {
+                                    @(i + 1)
+                                }
+                            </td>
+                            <td class="text-nowrap">@player.Name</td>
+                            <td class="text-center text-nowrap">@player.CurrentMatches</td>
+                            <td class="text-center text-nowrap">@player.CurrentPoints</td>
+                            <td class="text-center text-nowrap">@player.RateWin.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            <td class="text-center text-nowrap">@player.CurrentPointsPerMatch.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            <td class="text-center text-nowrap">
+                                @foreach (var form in player.Form)
+                                {
+                                    string badgeClass;
+                                    string badgeText;
+                                    string tooltipText;
+
+                                    switch (form)
+                                    {
+                                        case Football.Data.Models.Result.Win:
+                                            badgeClass = "bg-success";
+                                            badgeText = "W";
+                                            tooltipText = "Win";
+                                            break;
+                                        case Football.Data.Models.Result.Lose:
+                                            badgeClass = "bg-danger";
+                                            badgeText = "L";
+                                            tooltipText = "Lose";
+                                            break;
+                                        default:
+                                            badgeClass = "bg-secondary";
+                                            badgeText = "-";
+                                            tooltipText = "No match";
+                                            break;
+                                    }
+
+                                    <span class="badge fixed-width @badgeClass" data-bs-toggle="tooltip" title="@tooltipText">
+                                        @badgeText
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
+        </table>
+    </div>
 }
 else
 {
@@ -191,6 +188,10 @@ else
         align-items: center;
         justify-content: center;
         text-align: center;
+    }
+
+    .table-responsive {
+        overflow-x: auto
     }
 </style>
 
